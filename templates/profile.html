@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}{{ user }}'s Profile — Inkwell{% endblock %}
+{% block title %}{{ user }}'s Profile — NextWave Stories {% endblock %}
+
 {% block content %}
 <div class="profile-page">
   <div class="profile-banner grad-tech"></div>
@@ -59,7 +60,7 @@
         <div class="empty-state">
           <div class="empty-icon">✍️</div>
           <h3>No posts yet</h3>
-          <p>Share your first story with the Inkwell community.</p>
+          <p>Share your first story with the NextWave Stories community.</p>
           <a href="{{ url_for('create_post') }}" class="btn-primary">Write your first post</a>
         </div>
       {% endif %}
