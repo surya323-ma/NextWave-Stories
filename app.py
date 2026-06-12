@@ -185,7 +185,7 @@ def register():
         }
         save_data(data)
         session["user"] = username
-        flash("Account created! Welcome to Inkwell.", "success")
+        flash("Account created! Welcome to NextWave Stories.", "success")
         return redirect(url_for("index"))
     return render_template("register.html")
 
