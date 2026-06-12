@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}Inkwell — Discover Amazing Stories{% endblock %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🌟 Welcome to Inkwell</div>
+    <h1 class="hero-title">Ideas worth sharing,<br><span class="hero-accent">stories worth reading.</span></h1>
+    <p class="hero-sub">A platform for curious minds — technology, travel, food, culture, and everything in between.</p>
+    <div class="hero-actions">
+      {% if user %}
+        <a href="{{ url_for('create_post') }}" class="btn-primary">✍️ Start Writing</a>
+      {% else %}
+        <a href="{{ url_for('register') }}" class="btn-primary">Join Inkwell →</a>
+        <a href="{{ url_for('login') }}" class="btn-ghost">Sign In</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="hero-decoration">
+    <div class="hero-card floating">📝</div>
+    <div class="hero-card floating" style="animation-delay:.4s">✨</div>
+    <div class="hero-card floating" style="animation-delay:.8s">🌍</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-val">{{ total_posts }}</div>
+        <div class="stat-label">Total Posts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-val">10+</div>
+        <div class="stat-label">Authors</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">❤️</div>
+        <div class="stat-val">{{ total_likes }}</div>
+        <div class="stat-label">Total Likes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-val">{{ total_comments }}</div>
+        <div class="stat-label">Comments</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY FILTER -->
+<section class="filter-section">
+  <div class="container">
+    <div class="filter-bar">
+      {% for cat in categories %}
+        <a href="{{ url_for('index', category=cat, search=search) }}"
+           class="filter-chip {% if cat==active_cat %}active{% endif %}">
+          {% if cat == 'Technology' %}💻
+          {% elif cat == 'Travel' %}✈️
+          {% elif cat == 'Food' %}🍽️
+          {% elif cat == 'Lifestyle' %}🌿
+          {% elif cat == 'Photography' %}📷
+          {% elif cat == 'Education' %}📚
+          {% endif %}
+          {{ cat }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- POSTS GRID -->
+<section class="posts-section">
+  <div class="container">
+    {% if posts %}
+      <!-- Featured Post (first one) -->
+      {% if active_cat == 'All' and not search %}
+        <div class="featured-post">
+          <div class="featured-gradient {{ posts[0].gradient }}"></div>
+          <div class="featured-content">
+            <div class="featured-meta">
+              <span class="cat-badge">{{ posts[0].category }}</span>
+              {% for tag in posts[0].tags[:2] %}
+                <span class="tag-badge">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            <h2 class="featured-title">{{ posts[0].title }}</h2>
+            <p class="featured-excerpt">{{ posts[0].excerpt }}</p>
+            <div class="featured-footer">
+              <div class="author-row">
+                <div class="avatar">{{ posts[0].author[:2].upper() }}</div>
+                <div>
+                  <div class="author-name">{{ posts[0].author }}</div>
+                  <div class="post-meta-sm">{{ posts[0].date }}</div>
+                </div>
+              </div>
+              <a href="{{ url_for('post_detail', post_id=posts[0].id) }}" class="btn-read">Read Story →</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="posts-grid">
+        {% set start = 1 if (active_cat == 'All' and not search) else 0 %}
+        {% for post in posts[start:] %}
+          <article class="post-card" onclick="window.location='{{ url_for('post_detail', post_id=post.id) }}'">
+            <div class="card-hero {{ post.gradient }}">
+              <span class="card-icon">{{ post.image_icon }}</span>
+            </div>
+            <div class="card-body">
+              <div class="card-tags">
+                <span class="cat-badge">{{ post.category }}</span>
+                {% for tag in post.tags[:2] %}
+                  <span class="tag-badge">{{ tag }}</span>
+                {% endfor %}
+              </div>
+              <h3 class="card-title">{{ post.title }}</h3>
+              <p class="card-excerpt">{{ post.excerpt }}</p>
+              <div class="card-footer">
+                <div class="author-row">
+                  <div class="avatar sm">{{ post.author[:2].upper() }}</div>
+                  <div>
+                    <div class="author-name sm">{{ post.author }}</div>
+                    <div class="post-meta-sm">{{ post.date }}</div>
+                  </div>
+                </div>
+                <div class="card-stats">
+                  <span>❤️ {{ post.likes }}</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No posts found</h3>
+        <p>Try a different search term or category.</p>
+        <a href="{{ url_for('index') }}" class="btn-primary">Clear filters</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Inkwell Blog{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="{{ url_for('index') }}" class="nav-brand">
+      <span class="brand-icon">📰</span>
+      <span class="brand-name">Inkwell</span>
+    </a>
+    <div class="nav-search">
+      <form action="{{ url_for('index') }}" method="get">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" name="search" placeholder="Search posts…" value="{{ request.args.get('search','') }}">
+        </div>
+      </form>
+    </div>
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint=='index' %}active{% endif %}">🏠 Feed</a>
+      {% if user %}
+        <a href="{{ url_for('create_post') }}" class="nav-link {% if request.endpoint=='create_post' %}active{% endif %}">✍️ Write</a>
+        <a href="{{ url_for('profile') }}" class="nav-link {% if request.endpoint=='profile' %}active{% endif %}">👤 {{ user }}</a>
+        <a href="{{ url_for('logout') }}" class="nav-link logout">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+        <a href="{{ url_for('register') }}" class="nav-btn">Sign Up</a>
+      {% endif %}
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="{{ url_for('index') }}">🏠 Feed</a>
+    {% if user %}
+      <a href="{{ url_for('create_post') }}">✍️ Write</a>
+      <a href="{{ url_for('profile') }}">👤 Profile</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Sign Up</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}">{{ msg }} <button onclick="this.parentElement.remove()">×</button></div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- MAIN -->
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <span class="brand-icon">📰</span>
+      <span class="brand-name">Inkwell</span>
+      <p>Ideas worth sharing, stories worth reading.</p>
+    </div>
+    <div class="footer-links">
+      <span>© 2026 Inkwell Blog Platform</span>
+      <span>Built with Python + Flask</span>
+    </div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
