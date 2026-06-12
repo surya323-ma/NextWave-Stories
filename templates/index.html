@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Inkwell — Discover Amazing Stories{% endblock %}
+{% block title %}NextWave  — Discover Amazing Stories{% endblock %}
 {% block content %}
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-badge">🌟 Welcome to Inkwell</div>
+    <div class="hero-badge">🌟 Welcome to NextWave Stories</div>
     <h1 class="hero-title">Ideas worth sharing,<br><span class="hero-accent">stories worth reading.</span></h1>
     <p class="hero-sub">A platform for curious minds — technology, travel, food, culture, and everything in between.</p>
     <div class="hero-actions">
       {% if user %}
         <a href="{{ url_for('create_post') }}" class="btn-primary">✍️ Start Writing</a>
       {% else %}
-        <a href="{{ url_for('register') }}" class="btn-primary">Join Inkwell →</a>
+        <a href="{{ url_for('register') }}" class="btn-primary">Join NextWave Stories →</a>
         <a href="{{ url_for('login') }}" class="btn-ghost">Sign In</a>
       {% endif %}
     </div>
