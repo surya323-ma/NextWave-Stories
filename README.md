@@ -1,4 +1,4 @@
-# 📰 Inkwell — Blog Website
+# 📰 NextWave Stories— Blog Website
 
 A full-featured blog platform built with Python Flask, ready to deploy on Render.
 
@@ -15,7 +15,7 @@ A full-featured blog platform built with Python Flask, ready to deploy on Render
 
 ## Project Structure
 ```
-inkwell/
+NextWave Stories/
 ├── app.py              # Flask application (routes, auth, API)
 ├── data.json           # Auto-created JSON database
 ├── requirements.txt
@@ -52,9 +52,9 @@ http://localhost:5000
 ```bash
 git init
 git add .
-git commit -m "Initial commit — Inkwell Blog"
+git commit -m "Initial commit — NextWave Stories "
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/inkwell-blog.git
+git remote add origin https://github.com/surya323-ma/NextWave Stories.git
 git push -u origin main
 ```
 
